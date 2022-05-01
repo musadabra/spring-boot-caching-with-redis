@@ -4,7 +4,6 @@ package com.redis.Redis.controller;
 import com.redis.Redis.model.AppResponse;
 import com.redis.Redis.model.UserMessage;
 import com.redis.Redis.service.UserMessageService;
-import com.redis.Redis.util.controller.MyResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

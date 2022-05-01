@@ -24,11 +24,11 @@ public class UserMessageService {
     // Check the TO number, return appropraite response.
     public AppResponse saveNumber(UserMessage message, long userId){
         // Find the phone number if it exist
-        PhoneNumber phoneNumber = phoneNumberRepository.findByNumber(message.getTo()).orElse(null);
+        PhoneNumber phoneNumber = phoneNumberRepository.findbyNumber(message.getTo());
         if(phoneNumber == null)
             return new AppResponse("", "To parameter not found");
 
-        if(phoneNumber.getAccount().getId != userId)
+        if(phoneNumber.getAccount().getId() != userId)
             return new AppResponse("", "To parameter not found");
 
         // Count the number of time saved in Redis

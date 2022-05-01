@@ -1,11 +1,6 @@
 package com.redis.Redis.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.Arrays;
-
-import com.redis.Redis.model.serializer.AppResponseStatusSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
