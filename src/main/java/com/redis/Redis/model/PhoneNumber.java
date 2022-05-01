@@ -1,5 +1,6 @@
 package com.redis.Redis.model;
 
+import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -7,17 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author Musa Dabra
  * THIS CLASS IS A DATA ACCESS OBJECT, MODEL, USED FOR RETRIVING OR SAVING PHONE_NUMBER IN THE DB.
  */
-@Getter
-@Setter
+@Data
+
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity(name = "phone_number")
+@Entity
+@Table(name = "phone_number")
 public class PhoneNumber{
     @Id
     private long id;

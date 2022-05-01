@@ -5,10 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
@@ -21,6 +20,7 @@ import javax.persistence.Entity;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity(name = "account")
 public class UserAccount {
+    
     @Id
     private long id;
     
