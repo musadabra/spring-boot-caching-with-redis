@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @ControllerAdvice
-@RequestMapping
+@RequestMapping("/api")
 public class MessageController {
 
     @Autowired

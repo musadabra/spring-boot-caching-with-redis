@@ -16,7 +16,8 @@ import lombok.Data;
  * THIS CLASS IS A DATA ACCESS OBJECT, MODEL, USED FOR RETRIVING OR SAVING PHONE_NUMBER IN THE DB.
  */
 @Data
-
+@Getter
+@Setter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
@@ -33,5 +34,6 @@ public class PhoneNumber{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id", nullable=false)
     private UserAccount account;
-
+    
+   
 }

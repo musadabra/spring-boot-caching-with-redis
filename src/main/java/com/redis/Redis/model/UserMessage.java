@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Range;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -25,15 +23,16 @@ import java.io.Serializable;
 public class UserMessage implements Serializable {
 
     // Not empty and string min length 6 max length 16
-    @NotEmpty
-    @Range(min = 6, max = 16)
+    @NotNull(message = "From is missing")
+    @Size(min = 6, max = 16, message = "From is Invalid, minimum length is 6 and maximum length 16.")
     private String from;
 
     // Not empty and string min length 6 max length 16
-    @NotEmpty
-    @Range(min = 6, max = 16)
+    @NotNull(message = "To is missing")
+    @Size(min = 6, max = 16, message = "To is Invalid, minimum length is 6 and maximum length 16.")
     private String to;
 
-    @NotBlank
+    @NotNull(message = "Text is missing")
+    @Size(min = 1, max = 120, message = "Text is Invalid, minimum length is 1 and maximum length 120.")
     private String text;
 }

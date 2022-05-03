@@ -31,5 +31,10 @@ public class AppResponse {
         this.message = message;
         this.error = error;
     }
+    
+    public void error(){
+        this.message = "";
+        this.error = "Unknown Failure.s";
+    }
 
 }
