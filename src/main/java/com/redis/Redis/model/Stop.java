@@ -17,26 +17,28 @@ import org.springframework.data.redis.core.RedisHash;
  * @author Musa Dabra
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @RedisHash("Stop")
 public class Stop implements Serializable{
     @Id
     private String id;
     private String from;
     private String to;
-//    private int counter;
-//    private Timestamp time;
+    private int counter;
+    
+    public Stop(String id, String from, String to){
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.counter = 0;
+    }
 
-//    public Stop(String id, String from, String to) {
-//        this.id = id;
-//        this.from = from;
-//        this.to = to;
-//        this.counter = 1;
-//        this.time = new Timestamp(System.currentTimeMillis());
-//    }
-//    
-//    public void incrementCount(){
-//        this.counter += 1;
-//    }
+    public int getCounter() {
+        return counter;
+    }
+    
+    public void incriment(){
+        counter = 0;
+    }
 }

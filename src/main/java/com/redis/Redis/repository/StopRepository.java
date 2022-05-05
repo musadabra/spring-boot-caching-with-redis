@@ -4,14 +4,19 @@
  */
 package com.redis.Redis.repository;
 
+import com.redis.Redis.config.RedisConfig;
 import com.redis.Redis.model.Stop;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
 import org.springframework.stereotype.Repository;
+import redis.clients.jedis.Jedis;
 
 /**
  *
@@ -20,36 +25,49 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class StopRepository {
     
-    public static final String HASH_KEY = "STOP";
+    private RedisConfig redisConfig;
     
-    @Autowired
-    private RedisTemplate<String, Object> template;
     private static final Logger LOG = Logger.getLogger(StopRepository.class.getName());
+    public final String HASH_KEY = "Stop";
     
-    public Stop save(Stop stop){
-        try {
-            template.opsForHash().put(HASH_KEY, stop.getId(), stop);
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, null, "Failed to save to redis.");
-        }
-        return stop;
+    private HashOperations hashOperations;
+    @Autowired
+    private RedisTemplate template;
+    
+    public StopRepository(RedisTemplate redisTemplate) {
+        this.hashOperations = redisTemplate.opsForHash();
+    }
+
+    public void create(Stop stop) {
+        hashOperations.put(HASH_KEY, stop.getId(), stop);
+        LOG.log(Level.INFO, "STOP with ID {0} saved", stop.getId());
+    }
+	
+    public Stop get(String stopKey) {
+            return (Stop) hashOperations.get(HASH_KEY, stopKey);
+    }
+
+    public Map<String, Stop> getAll(){
+            return hashOperations.entries(HASH_KEY);
+    }
+
+    public void update(Stop stop) {
+        hashOperations.put(HASH_KEY, stop.getId(), stop);
+        LOG.log(Level.INFO, "User with ID {0} updated", stop.getId());
+    }
+
+    public void delete(String stopKey) {
+        hashOperations.delete(HASH_KEY, stopKey);
+        LOG.log(Level.INFO, "User with ID {0} deleted", stopKey);
+    }
+
+    public void saveWithExpiration(Stop stopObj) {
+        template.opsForHash().put(HASH_KEY, stopObj.getId(), stopObj);
+        LOG.log(Level.INFO, "STOP with ID {0} saved", stopObj.getId());
     }
     
-    public List<Object> findAll(){
-        List<Object> allValues = new ArrayList<>();
-        try {
-            allValues = template.opsForHash().values(HASH_KEY);
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, null, "Failed to fetch all from redis.");
-        }
-        return allValues;
-    }
-    
-    public Stop findStopByFrom(String id){
-        return (Stop) template.opsForHash().get(HASH_KEY, id);
-    }
-    
-    public long deleteStop(String id){
-        return template.opsForHash().delete(HASH_KEY, id);
+    public Set<String> getAllKeys(){
+      Set<String> list = redisConfig.jedisConnection().keys("*");; 
+      return list;
     }
 }
